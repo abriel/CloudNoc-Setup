@@ -82,3 +82,14 @@ attribute "zabbix/proxy_ip",
     "zabbix::default"
   ]
 
+attribute "zabbix/package_bucket",
+  :display_name => "package_bucket",
+  :description => "",
+  :required => "optional",
+  :default => "https://cloudnoc.s3.amazonaws.com/",
+  :recipes => [
+    "zabbix::setup_proxy",
+    "zabbix::setup_agent",
+    "zabbix::default"
+  ]
+
