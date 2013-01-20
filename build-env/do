@@ -1,0 +1,38 @@
+#!/bin/bash
+
+DEPS="libcurl4-gnutls-dev libmysqlclient-dev libsnmp-dev libsqlite3-dev libssh2-1-dev php5 php5-gd php5-mysql build-essential libiksemel-dev"
+#CENTO5-DEPS="sqlite-devel.x86_64 net-snmp-devel.x86_64 make.x86_64 gcc.x86_64 curl-devel.x86_64 gcc make libssh2  mysql-devel.x86_64 iksemel-devel.x86_64 openldap-devel.x86_64"
+
+case $1 in
+	all)
+		make clean
+		./configure --enable-agent --enable-server --enable-proxy --with-mysql --with-libcurl --with-net-snmp --with-ssh2 --with-jabber
+		make
+		;;
+	all-pq)
+		make clean
+		./configure --enable-agent --enable-server --enable-proxy --with-postgresql --with-libcurl --with-net-snmp --with-ssh2 --with-jabber
+		make
+		;;
+	proxy)
+		make clean
+		./configure --enable-proxy --with-sqlite3 --with-libcurl --with-net-snmp --with-ssh2
+		make
+		;;
+	agent)
+		make clean
+		./configure --enable-agent --with-libcurl --with-net-snmp --with-ssh2
+		make
+		;;
+	server)
+		make clean
+		./configure --enable-server --with-mysql --with-libcurl --with-net-snmp --with-ssh2 --with-jabber
+		make
+		;;
+	get-deps)
+		aptitude install $DEPS
+		;;
+	*)
+		echo "USAGE: $0 agent|proxy|server"
+		;;
+esac
