@@ -17,6 +17,7 @@ Attributes
 
 <b> Set this according to manual </b>
 * <tt>node[:zabbix][:proxy_ip]</tt> - PRIVATE_IP of zabbix proxy server
+* <tt>node[:zabbix][:package_bucket]</tt> - Path that will be used to retrieve zabbix packages
 
 Usage
 =====

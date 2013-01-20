@@ -8,7 +8,7 @@
 #
 
 rightscale_marker :start
-log "Centos detected - installing deps"
+log "Installing agent"
 
 log "node[:zabbix][:server_path] - #node[:zabbix][:server_path]"
 log "node[:zabbix][:username] - #node[:zabbix][:username]"
@@ -18,21 +18,16 @@ log "node[:zabbix][:proxy_host_name] - #node[:zabbix][:proxy_host_name]"
 log "node[:zabbix][:proxy_ip] - #node[:zabbix][:proxy_ip]"
 log "node[:zabbix][:package_bucket] - #node[:zabbix][:package_bucket]"
 
-
-packages = node[:zabbix][:proxy_deps]
-packages.each do |p|
-  package p do
-    action :install
-  end
-end
-
-group "zabbix" do
-  action :create
-end
-
-user "zabbix" do
-  comment "Zabbix user"
-  gid "users"
-end
+#TODO
+# 
+# * Retrieve agent package
+# * Install agent package
+# * Retrieve config package
+# * Install init script
+# * Populate node vars into zabbix_agentd.conf
+# * Start agent
+# * Setup api deps
+# * Register host via api
+#
 
 rightscale_marker :end
