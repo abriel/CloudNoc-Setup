@@ -18,5 +18,3 @@ when "centos", "redhat"
 else
   raise "Unrecognized distro #{node[:platform]} for monitoring attributes , exiting "
 end
-
-raise "Unrecognized distro #{node[:platform]} for monitoring attributes , exiting "
