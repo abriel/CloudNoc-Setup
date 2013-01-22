@@ -57,7 +57,7 @@ bash "change_opts" do
     sed -i 's/server/proxy/g' /etc/init.d/zabbix_proxy
     sed -i '/^Server.*/ c\Server=#{node[:zabbix][:server_path]}' /usr/local/etc/zabbix_proxy.conf
     sed -i '/^Hostname.*/ c\Hostname=#{node[:zabbix][:proxy_host_name]}' /usr/local/etc/zabbix_proxy.conf
-    sed -i 's/https\:\/\///g' /usr/local/etc/zabbix_proxy.conf
+    sed -i "s/https\:\/\///g" /usr/local/etc/zabbix_proxy.conf
     sed -i '/^DBName.*/ c\DBName=/usr/local/share/zabbix/zabbix.db' /usr/local/etc/zabbix_proxy.conf
 
     sqlite3 /usr/local/share/zabbix/zabbix.db < /tmp/database/sqlite3/schema.sql

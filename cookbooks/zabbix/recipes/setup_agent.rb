@@ -8,6 +8,14 @@
 #
 
 rightscale_marker :start
+
+if #{node[:zabbix][:is_agent]}?("Yes")
+  log "I'm an Agent"
+else
+  log "Sorry, I'm not an agent, I dont need this"
+  return
+end
+
 log "Installing agent"
 
 log "node[:zabbix][:server_path] - #{node[:zabbix][:server_path]}"
@@ -28,40 +36,22 @@ log "node[:zabbix][:package_bucket] - #{node[:zabbix][:package_bucket]}"
 # * Setup api deps
 # * Register host via api
 
-case node[:zabbix][:current_os]
+case #node[:zabbix][:current_os]
 when "centos"
-  log "  Retrieving package #{node[:zabbix][:agent_package]} from #{node[:zabbix][:package_bucket]}"
+  log "Retrieving package #{node[:zabbix][:agent_package]} from #{node[:zabbix][:package_bucket]}"
   remote_file "/tmp/#{node[:zabbix][:agent_package]}" do
     source "#{node[:zabbix][:package_bucket]}#{node[:zabbix][:agent_package]}"
     action :create_if_missing
   end
-# bash "get_package" do
-#    flags "-ex"
-#    code <<-EOH
-#      wget #{node[:zabbix][:package_bucket]}/#{node[:zabbix][:agent_package]} -O /tmp/#{node[:zabbix][:agent_package]}
-#    EOH
-#  end
 
   log "  Retrieving package zabbix-conf.tar.gz from #{node[:zabbix][:package_bucket]}"
-  remote_file "/tmp/#{node[:zabbix][:agent_package]}" do
+  remote_file "/tmp/zabbix-conf.tar.gz" do
     source "#{node[:zabbix][:package_bucket]}zabbix-conf.tar.gz"
     action :create_if_missing
   end
-#  bash "get_config" do
-#    flags "-ex"
-#    code <<-EOH
-#      wget #{node[:zabbix][:package_bucket]}/zabbix-conf.tar.gz -O /tmp/#{node[:zabbix][:agent_package]}
-#    EOH
-#  end
-
-  log "  Installing package #{node[:zabbix][:agent_package]}"
-  package "zabbix-agent" do
-    action :install
-    source "/tmp/#{node[:zabbix][:agent_package]}"
-  end
 
   execute "unpack_conf" do
-    command "tar -C /tmp -xvf /tmp/#{node[:zabbix][:agent_package]}"
+    command "tar -C /tmp -xvf /tmp/zabbix-conf.tar.gz && cp /tmp/conf/zabbix_agentd.conf /usr/local/etc/zabbix_agentd.conf && cp /tmp/misc/init.d/fedora/core5/zabbix_agentd /etc/init.d/zabbix_agentd"
     user "root"
     only_if "test -f /tmp/#{node[:zabbix][:agent_package]}"
   end
@@ -69,14 +59,54 @@ when "centos"
   hostname=`hostname --fqdn`
   log "  Updating zabbix_agentd.conf"
   bash "update_config" do
-    flags "-ex"
     code <<-EOH
-       sed -i "s/^Server=/Server=#{server}/" "#{node[:zabbix][:agent_config]}"
-       sed -i "s/^ActiveServer=/ActiveServer=#{node[:zabbix][:proxy_ip]}/" "#{node[:zabbix][:agent_config]}"
-       sed -i "s/^Hostname=/Hostname=#{hostname}/" "#{node[:zabbix][:agent_config]}"
+      rpm -i /tmp/#{node[:zabbix][:agent_package]}
+      sed -i '/^Server.*/ c\Server=#{node[:zabbix][:server_path]}' /usr/local/etc/zabbix_agentd.conf
+      sed -i '/^Hostname.*/ c\Hostname=#{hostname}' /usr/local/etc/zabbix_agentd.conf
+      sed -i '/^ActiveServer.*/ c\ActiveServer=#{node[:zabbix][:proxy_ip]}' /usr/local/etc/zabbix_agentd.conf
     EOH
   end
 
+  #enable and start service
+  service "zabbix_agent" do
+    action [ :enable, :start ]
+  end
+
+  #This Scripts adds host to Zabbix server via Zabbix API
+  cookbook_file "/tmp/add_host.py" do
+    source "add_host.py"
+    owner "root"
+    mode 00755
+  end
+
+  cookbook_file "/tmp/zabbix_api.py" do
+    source "zabbix_api.py"
+    owner "root"
+    mode 00755
+  end
+
+  #configure
+  bash "configure_script" do
+    code <<-EOH
+      source /var/spool/ec2/meta-data.sh
+
+      sed -i "s%@@SERVERNAME@@%#{node[:zabbix][:server_path]}%" /tmp/add_host.py
+      sed -i "s/@@USERNAME@@/#{node[:zabbix][:username]}/" /tmp/add_host.py
+      sed -i "s/@@PASSWORD@@/#{node[:zabbix][:password]}/" /tmp/add_host.py
+      sed -i "s/@@HOSTNAME@@/$EC2_LOCAL_HOSTNAME/" /tmp/add_host.py
+      sed -i "s/@@DESCRIPTION@@/"Description"/" /tmp/add_host.py
+      sed -i "s/@@CLIENTNAME@@/#{node[:zabbix][:clientname]}/" /tmp/add_host.py
+      sed -i "s/@@CLIETNEMAIL@@/#{node[:zabbix][:client_contact]}/" /tmp/add_host.py
+      sed -i "s/@@PROXYHOSTNAME@@/#{node[:zabbix][:proxy_host_name]}/" /tmp/add_host.py
+      sed -i "s/@@AGENTIP@@/$EC2_LOCAL_IPV4/" /tmp/add_host.py
+      sed -i "s/@@TMPL_ID@@/10001/" /tmp/add_host.py
+    EOH
+  end
+  #Executing add_host to Zabbix
+  execute "add_host" do
+    command "python /tmp/add_host.py"
+    user "root"
+  end
 
 else
   raise "Unrecognized distro #{node[:platform]} for monitoring attributes , exiting "

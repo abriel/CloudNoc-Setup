@@ -83,7 +83,7 @@ attribute "zabbix/clientname",
 
 attribute "zabbix/proxy_host_name",
   :display_name => "proxy_host_name",
-  :description => "Contact email for tickets",
+  :description => "Hostname of Proxy Server",
   :required => "optional",
   :default => "",
   :recipes => [
