@@ -31,25 +31,39 @@ log "node[:zabbix][:package_bucket] - #{node[:zabbix][:package_bucket]}"
 case node[:zabbix][:current_os]
 when "centos"
   log "  Retrieving package #{node[:zabbix][:agent_package]} from #{node[:zabbix][:package_bucket]}"
-  bash "get_package" do
-    flags "-ex"
-    code <<-EOH
-      wget #{node[:zabbix][:package_bucket]}/#{node[:zabbix][:agent_package]} -O /tmp/#{node[:zabbix][:agent_package]}
-    EOH
+  remote_file "/tmp/#{node[:zabbix][:agent_package]}" do
+    source "#{node[:zabbix][:package_bucket]}#{node[:zabbix][:agent_package]}"
+    action :create_if_missing
   end
+# bash "get_package" do
+#    flags "-ex"
+#    code <<-EOH
+#      wget #{node[:zabbix][:package_bucket]}/#{node[:zabbix][:agent_package]} -O /tmp/#{node[:zabbix][:agent_package]}
+#    EOH
+#  end
 
   log "  Retrieving package zabbix-conf.tar.gz from #{node[:zabbix][:package_bucket]}"
-  bash "get_config" do
-    flags "-ex"
-    code <<-EOH
-      wget #{node[:zabbix][:package_bucket]}/zabbix-conf.tar.gz -O /tmp/#{node[:zabbix][:agent_package]}
-    EOH
+  remote_file "/tmp/#{node[:zabbix][:agent_package]}" do
+    source "#{node[:zabbix][:package_bucket]}zabbix-conf.tar.gz"
+    action :create_if_missing
   end
+#  bash "get_config" do
+#    flags "-ex"
+#    code <<-EOH
+#      wget #{node[:zabbix][:package_bucket]}/zabbix-conf.tar.gz -O /tmp/#{node[:zabbix][:agent_package]}
+#    EOH
+#  end
 
   log "  Installing package #{node[:zabbix][:agent_package]}"
   package "zabbix-agent" do
     action :install
-    source "#{node.zabbix.agent_package}"
+    source "/tmp/#{node[:zabbix][:agent_package]}"
+  end
+
+  execute "unpack_conf" do
+    command "tar -C /tmp -xvf /tmp/#{node[:zabbix][:agent_package]}"
+    user "root"
+    only_if "test -f /tmp/#{node[:zabbix][:agent_package]}"
   end
 
   hostname=`hostname --fqdn`

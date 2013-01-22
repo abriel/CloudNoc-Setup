@@ -35,6 +35,7 @@ remote_file "/tmp/zabbix-conf.tar.gz" do
   source "#{node[:zabbix][:package_bucket]}zabbix-conf.tar.gz"
   action :create_if_missing 
 end
+
 directory "/usr/local/share/zabbix" do
   owner "zabbix"
   group "zabbix"
@@ -61,6 +62,12 @@ bash "change_opts" do
 
     sqlite3 /usr/local/share/zabbix/zabbix.db < /tmp/database/sqlite3/schema.sql
 EOH
+end
+
+file "/usr/local/share/zabbix/zabbix.db" do
+  owner "zabbix"
+  group "zabbix"
+  action :touch
 end
 
 # * Install init script
