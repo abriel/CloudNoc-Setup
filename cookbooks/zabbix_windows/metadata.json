@@ -1,30 +1,30 @@
 {
-  "replacing": {
-  },
-  "recommendations": {
-  },
-  "conflicting": {
-  },
-  "maintainer_email": "stanislav.kraev@cloudnoc.com",
-  "description": "Installs/Configures zabbix",
-  "name": "zabbix_windows",
-  "version": "0.0.1",
-  "maintainer": "CloudNOC Inc",
-  "attributes": {
-  },
-  "long_description": "Description\r\n===========\r\nInstall the Zabbix agent on Windows machines.\r\n\r\nRequirements\r\n============\r\nA Zabbix server is required for this to do anything useful.\r\n\r\nAttributes\r\n==========\r\n\r\nUsage\r\n=====\r\nSimply add the \"Zabbix\\_windows\" recipe to a windows machine after establishing your Zabbix server and setting the Attributes as appropriate to your environment.\r\n",
-  "dependencies": {
-  },
-  "groupings": {
-  },
   "suggestions": {
   },
-  "platforms": {
-  },
   "recipes": {
-    "zabbix::windows_agent": "Installs and configures Zabbix agent"
+    "zabbix_windows::windows_agent": "Installs and configures Zabbix agent"
+  },
+  "replacing": {
   },
   "providing": {
   },
+  "maintainer": "CloudNOC Inc",
+  "conflicting": {
+  },
+  "recommendations": {
+  },
+  "groupings": {
+  },
+  "attributes": {
+  },
+  "platforms": {
+  },
+  "name": "zabbix_windows",
+  "maintainer_email": "stanislav.kraev@cloudnoc.com",
+  "long_description": "Description\r\n===========\r\nInstall the Zabbix agent on Windows machines.\r\n\r\nRequirements\r\n============\r\nA Zabbix server is required for this to do anything useful.\r\n\r\nAttributes\r\n==========\r\n\r\nUsage\r\n=====\r\nSimply add the \"Zabbix\\_windows\" recipe to a windows machine after establishing your Zabbix server and setting the Attributes as appropriate to your environment.\r\n",
+  "description": "Installs/Configures zabbix",
+  "dependencies": {
+  },
+  "version": "0.0.1",
   "license": "All rights reserved"
 }
