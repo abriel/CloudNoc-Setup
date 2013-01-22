@@ -1,0 +1,14 @@
+Description
+===========
+Install the Zabbix agent on Windows machines.
+
+Requirements
+============
+A Zabbix server is required for this to do anything useful.
+
+Attributes
+==========
+
+Usage
+=====
+Simply add the "Zabbix\_windows" recipe to a windows machine after establishing your Zabbix server and setting the Attributes as appropriate to your environment.
