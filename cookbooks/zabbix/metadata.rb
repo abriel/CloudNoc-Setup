@@ -15,6 +15,16 @@ recipe "zabbix::default", "Setup environment"
 recipe "zabbix::setup_proxy", "Setup zabbix proxy"
 recipe "zabbix::setup_agent", "Setup zabbix agent"
 
+attribute "zabbix/is_agent",
+  :display_name => "is_agent",
+  :description => "Set to Yes if this instance is Agent, otherwise set to No",
+  :required => "optional",
+  :defailt => "Yes",
+  :recipes => [
+    "zabbix::setup_proxy",
+    "zabbix::setup_agent",
+    "zabbix::default"
+  ]
 
 attribute "zabbix/server_path",
   :display_name => "server_path",

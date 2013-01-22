@@ -1,161 +1,177 @@
 {
-  "dependencies": {
-    "rightscale": ">= 0.0.0"
+  "conflicting": {
   },
+  "maintainer_email": "stanislav.kraev@cloudnoc.com",
   "recipes": {
     "zabbix::setup_agent": "Setup zabbix agent",
     "zabbix::setup_proxy": "Setup zabbix proxy",
     "zabbix::default": "Setup environment"
   },
-  "version": "0.0.1",
-  "attributes": {
-    "zabbix/password": {
-      "calculated": false,
-      "required": "optional",
-      "default": "",
-      "recipes": [
-        "zabbix::setup_proxy",
-        "zabbix::setup_agent",
-        "zabbix::default"
-      ],
-      "display_name": "password",
-      "type": "string",
-      "description": "Password name used for authentification",
-      "choice": [
-
-      ]
-    },
-    "zabbix/username": {
-      "calculated": false,
-      "required": "optional",
-      "default": "",
-      "recipes": [
-        "zabbix::setup_proxy",
-        "zabbix::setup_agent",
-        "zabbix::default"
-      ],
-      "display_name": "username",
-      "type": "string",
-      "description": "User name used for authentification",
-      "choice": [
-
-      ]
-    },
-    "zabbix/client_contact": {
-      "calculated": false,
-      "required": "optional",
-      "default": "",
-      "recipes": [
-        "zabbix::setup_proxy",
-        "zabbix::setup_agent",
-        "zabbix::default"
-      ],
-      "display_name": "client_contact",
-      "type": "string",
-      "description": "Contact email for tickets",
-      "choice": [
-
-      ]
-    },
-    "zabbix/proxy_ip": {
-      "calculated": false,
-      "required": "optional",
-      "default": "",
-      "recipes": [
-        "zabbix::setup_proxy",
-        "zabbix::setup_agent",
-        "zabbix::default"
-      ],
-      "display_name": "proxy_ip",
-      "type": "string",
-      "description": "PRIVATE_IP of zabbix proxy server",
-      "choice": [
-
-      ]
-    },
-    "zabbix/server_path": {
-      "calculated": false,
-      "required": "optional",
-      "default": "",
-      "recipes": [
-        "zabbix::setup_proxy",
-        "zabbix::setup_agent",
-        "zabbix::default"
-      ],
-      "display_name": "server_path",
-      "type": "string",
-      "description": "Path to zabbix server e.g. https://mon1.cloudnoc.com",
-      "choice": [
-
-      ]
-    },
-    "zabbix/clientname": {
-      "calculated": false,
-      "required": "optional",
-      "default": "",
-      "recipes": [
-        "zabbix::setup_proxy",
-        "zabbix::setup_agent",
-        "zabbix::default"
-      ],
-      "display_name": "clientname",
-      "type": "string",
-      "description": "Name of the client",
-      "choice": [
-
-      ]
-    },
-    "zabbix/package_bucket": {
-      "calculated": false,
-      "required": "optional",
-      "default": "https://cloudnoc.s3.amazonaws.com/",
-      "recipes": [
-        "zabbix::setup_proxy",
-        "zabbix::setup_agent",
-        "zabbix::default"
-      ],
-      "display_name": "package_bucket",
-      "type": "string",
-      "description": "",
-      "choice": [
-
-      ]
-    },
-    "zabbix/proxy_host_name": {
-      "calculated": false,
-      "required": "optional",
-      "default": "",
-      "recipes": [
-        "zabbix::setup_proxy",
-        "zabbix::setup_agent",
-        "zabbix::default"
-      ],
-      "display_name": "proxy_host_name",
-      "type": "string",
-      "description": "Contact email for tickets",
-      "choice": [
-
-      ]
-    }
-  },
-  "name": "zabbix",
   "replacing": {
   },
-  "providing": {
+  "long_description": "Description\n===========\nInstalls and configures zabbix_proxy or zabbix_agent for CloudNOC platform.\n\nRequirements\n============\n\nAttributes\n==========\n<b> Get this from CloudNOC sales </b>\n* <tt>node[:zabbix][:server_path]</tt> - Path to zabbix server e.g. https://mon1.cloudnoc.com\n* <tt>node[:zabbix][:username]</tt> - User name used for authentification\n* <tt>node[:zabbix][:password]</tt> - Password name used for authentification\n* <tt>node[:zabbix][:contact1]</tt> - Contact email for tickets\n* <tt>node[:zabbix][:proxy_host_name]</tt> - Contact email for tickets\n\n\n<b> Set this according to manual </b>\n* <tt>node[:zabbix][:proxy_ip]</tt> - PRIVATE_IP of zabbix proxy server\n* <tt>node[:zabbix][:package_bucket]</tt> - Path that will be used to retrieve zabbix packages\n\nUsage\n=====\n\n",
+  "name": "zabbix",
+  "dependencies": {
+    "rightscale": ">= 0.0.0"
+  },
+  "attributes": {
+    "zabbix/clientname": {
+      "recipes": [
+        "zabbix::setup_proxy",
+        "zabbix::setup_agent",
+        "zabbix::default"
+      ],
+      "choice": [
+
+      ],
+      "required": "optional",
+      "display_name": "clientname",
+      "default": "",
+      "calculated": false,
+      "description": "Name of the client",
+      "type": "string"
+    },
+    "zabbix/username": {
+      "recipes": [
+        "zabbix::setup_proxy",
+        "zabbix::setup_agent",
+        "zabbix::default"
+      ],
+      "choice": [
+
+      ],
+      "required": "optional",
+      "display_name": "username",
+      "default": "",
+      "calculated": false,
+      "description": "User name used for authentification",
+      "type": "string"
+    },
+    "zabbix/proxy_ip": {
+      "recipes": [
+        "zabbix::setup_proxy",
+        "zabbix::setup_agent",
+        "zabbix::default"
+      ],
+      "choice": [
+
+      ],
+      "required": "optional",
+      "display_name": "proxy_ip",
+      "default": "",
+      "calculated": false,
+      "description": "PRIVATE_IP of zabbix proxy server",
+      "type": "string"
+    },
+    "zabbix/package_bucket": {
+      "recipes": [
+        "zabbix::setup_proxy",
+        "zabbix::setup_agent",
+        "zabbix::default"
+      ],
+      "choice": [
+
+      ],
+      "required": "optional",
+      "display_name": "package_bucket",
+      "default": "https://cloudnoc.s3.amazonaws.com/",
+      "calculated": false,
+      "description": "",
+      "type": "string"
+    },
+    "zabbix/password": {
+      "recipes": [
+        "zabbix::setup_proxy",
+        "zabbix::setup_agent",
+        "zabbix::default"
+      ],
+      "choice": [
+
+      ],
+      "required": "optional",
+      "display_name": "password",
+      "default": "",
+      "calculated": false,
+      "description": "Password name used for authentification",
+      "type": "string"
+    },
+    "zabbix/client_contact": {
+      "recipes": [
+        "zabbix::setup_proxy",
+        "zabbix::setup_agent",
+        "zabbix::default"
+      ],
+      "choice": [
+
+      ],
+      "required": "optional",
+      "display_name": "client_contact",
+      "default": "",
+      "calculated": false,
+      "description": "Contact email for tickets",
+      "type": "string"
+    },
+    "zabbix/is_agent": {
+      "recipes": [
+        "zabbix::setup_proxy",
+        "zabbix::setup_agent",
+        "zabbix::default"
+      ],
+      "choice": [
+
+      ],
+      "required": "optional",
+      "defailt": "Yes",
+      "display_name": "is_agent",
+      "calculated": false,
+      "description": "Set to Yes if this instance is Agent, otherwise set to No",
+      "type": "string"
+    },
+    "zabbix/proxy_host_name": {
+      "recipes": [
+        "zabbix::setup_proxy",
+        "zabbix::setup_agent",
+        "zabbix::default"
+      ],
+      "choice": [
+
+      ],
+      "required": "optional",
+      "display_name": "proxy_host_name",
+      "default": "",
+      "calculated": false,
+      "description": "Contact email for tickets",
+      "type": "string"
+    },
+    "zabbix/server_path": {
+      "recipes": [
+        "zabbix::setup_proxy",
+        "zabbix::setup_agent",
+        "zabbix::default"
+      ],
+      "choice": [
+
+      ],
+      "required": "optional",
+      "display_name": "server_path",
+      "default": "",
+      "calculated": false,
+      "description": "Path to zabbix server e.g. https://mon1.cloudnoc.com",
+      "type": "string"
+    }
+  },
+  "recommendations": {
+  },
+  "maintainer": "CloudNOC Inc",
+  "version": "0.0.1",
+  "groupings": {
   },
   "license": "All rights reserved",
-  "long_description": "Description\n===========\nInstalls and configures zabbix_proxy or zabbix_agent for CloudNOC platform.\n\nRequirements\n============\n\nAttributes\n==========\n<b> Get this from CloudNOC sales </b>\n* <tt>node[:zabbix][:server_path]</tt> - Path to zabbix server e.g. https://mon1.cloudnoc.com\n* <tt>node[:zabbix][:username]</tt> - User name used for authentification\n* <tt>node[:zabbix][:password]</tt> - Password name used for authentification\n* <tt>node[:zabbix][:contact1]</tt> - Contact email for tickets\n* <tt>node[:zabbix][:proxy_host_name]</tt> - Contact email for tickets\n\n\n<b> Set this according to manual </b>\n* <tt>node[:zabbix][:proxy_ip]</tt> - PRIVATE_IP of zabbix proxy server\n* <tt>node[:zabbix][:package_bucket]</tt> - Path that will be used to retrieve zabbix packages\n\nUsage\n=====\n\n",
   "description": "Installs/Configures zabbix",
-  "groupings": {
+  "providing": {
   },
   "suggestions": {
   },
   "platforms": {
-  },
-  "conflicting": {
-  },
-  "recommendations": {
-  },
-  "maintainer_email": "stanislav.kraev@cloudnoc.com",
-  "maintainer": "CloudNOC Inc"
+  }
 }
