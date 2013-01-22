@@ -18,8 +18,6 @@ log "node[:zabbix][:proxy_host_name] - #node[:zabbix][:proxy_host_name]"
 log "node[:zabbix][:proxy_ip] - #node[:zabbix][:proxy_ip]"
 log "node[:zabbix][:package_bucket] - #node[:zabbix][:package_bucket]"
 
-#TODO
-# 
 # * Retrieve agent package
 # * Install agent package
 # * Retrieve config package
@@ -28,6 +26,5 @@ log "node[:zabbix][:package_bucket] - #node[:zabbix][:package_bucket]"
 # * Start agent
 # * Setup api deps
 # * Register host via api
-#
 
 rightscale_marker :end
