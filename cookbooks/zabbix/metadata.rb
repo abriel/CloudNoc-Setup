@@ -49,9 +49,20 @@ attribute "zabbix/password",
     "zabbix::default"
   ]
 
-attribute "zabbix/contact1",
-  :display_name => "contact1",
+attribute "zabbix/client_contact",
+  :display_name => "client_contact",
   :description => "Contact email for tickets",
+  :required => "optional",
+  :default => "",
+  :recipes => [
+    "zabbix::setup_proxy",
+    "zabbix::setup_agent",
+    "zabbix::default"
+  ]
+
+attribute "zabbix/clientname",
+  :display_name => "clientname",
+  :description => "Name of the client",
   :required => "optional",
   :default => "",
   :recipes => [
