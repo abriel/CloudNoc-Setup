@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-installdir	= node.zabbix_windows.agent.install_dir
+installdir	= node.zabbix_windows.install_dir
 
 installer	= "zabbix_agentd#{node[:zabbix_windows][:windows_bitness]}.exe"
 getter		= "zabbix_get#{node[:zabbix_windows][:windows_bitness]}.exe"

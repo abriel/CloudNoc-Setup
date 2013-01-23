@@ -11,4 +11,3 @@ Attributes
 
 Usage
 =====
-Simply add the "Zabbix\_windows" recipe to a windows machine after establishing your Zabbix server and setting the Attributes as appropriate to your environment.

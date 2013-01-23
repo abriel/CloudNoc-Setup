@@ -10,4 +10,3 @@ case node[:kernel][:machine].to_s
 	else
 		set_unless[:zabbix_windows][:windows_bitness] = 32
 end
-
