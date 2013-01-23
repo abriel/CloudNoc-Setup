@@ -14,7 +14,7 @@ default['zabbix_windows']['agent']['hostname'] = node.fqdn
 default['zabbix_windows']['agent']['configure_options'] = [ "--with-libcurl" ]
 default['zabbix_windows']['agent']['install_method'] = "prebuild"
 
-default['zabbix_windows']['agent']['include_dir'] = "C:\\zabbix\\agent\\agent_include"
+#default['zabbix_windows']['agent']['include_dir'] = "C:\\zabbix\\agent\\agent_include"
 default['zabbix_windows']['agent']['install_dir'] = "C:\\zabbix\\agent"
 
 
