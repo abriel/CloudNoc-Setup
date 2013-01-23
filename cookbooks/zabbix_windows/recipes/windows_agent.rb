@@ -50,15 +50,29 @@ end
 powershell "Chef Tutorial" do
 parameters({'MYNAME' => @node[:zabbix_windows][:install_dir]})
   powershell_script = <<'POWERSHELL_SCRIPT'
-  echo "$env:MYNAME" > c:\1.txt
-  (Get-Content "C:\\zabbix\\agent\\zabbix_agentd.conf") | %{$_ -replace "http://", ""} | Set-Content "C:\\zabbix\\agent\\zabbix_agentd.conf"
+  echo "$env:MYPATH" > c:\1.txt
+  (Get-Content "$env:MYPATH\\zabbix_agentd.conf") | %{$_ -replace "http://", ""} | Set-Content "$env:MYPATH\\zabbix_agentd.conf"
 POWERSHELL_SCRIPT
   source(powershell_script)
 end
 
-execute "install-zabbix-agentd" do
-  command "#{installdir}\\#{installer} --config #{installdir}\\zabbix_agentd.conf --install"
+# Check Windows Service
+require 'win32ole'
+zabbixservice = 'Zabbix Agent'
+wmi = WIN32OLE.connect("winmgmts://")
+services = wmi.ExecQuery("Select * from Win32_Service where Name = '#{zabbixservice}'")
+if services.count >= 1
+  #service exists
+else
+  # Back to Chef-land
+  execute "Install Zabbix" do
+    command "#{installdir}\\#{installer} --config #{installdir}\\zabbix_agentd.conf --install"
+  end
 end
+
+#execute "install-zabbix-agentd" do
+#  command "#{installdir}\\#{installer} --config #{installdir}\\zabbix_agentd.conf --install"
+#end
 
 service "Zabbix Agent" do
   action :start
