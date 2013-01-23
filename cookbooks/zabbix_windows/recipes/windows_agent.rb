@@ -8,7 +8,6 @@
 #
 
 installdir	= node.zabbix_windows.agent.install_dir
-includedir	= node.zabbix_windows.agent.include_dir
 
 installer	= "zabbix_agentd#{node[:zabbix_windows][:windows_bitness]}.exe"
 getter		= "zabbix_get#{node[:zabbix_windows][:windows_bitness]}.exe"
@@ -18,9 +17,8 @@ log "Debug"
 log "installer: #{installer}"
 log "getter: #{getter}"
 log "sender: #{sender}"
-log "log dir: #{node[:zabbix_windows][:include_dir]}"
+log "log dir: #{node[:zabbix_windows][:log_dir]}"
 log "installdir: #{installdir}"
-log "include dir: #{node[:zabbix_windows][:include_dir]}"
 
 directory node[:zabbix_windows][:log_dir] do
 	action :create

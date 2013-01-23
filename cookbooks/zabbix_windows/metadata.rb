@@ -7,8 +7,23 @@ version          "0.0.1"
 
 recipe "zabbix_windows::windows_agent", "Installs and configures Zabbix agent"
 
+
+attribute "zabbix_windows/log_dir",
+  :display_name => "agent_log_dir",
+  :description => "Zabbix Agent Install Dir e.g. C:\\zabbix\\agent\\log",
+  :required => "optional",
+  :default => "C:\\zabbix\\agent\\log",
+  :recipes => [ "zabbix_windows::windows_agent" ]
+
+attribute "zabbix_windows/install_dir",
+  :display_name => "agent_install_dir",
+  :description => "Zabbix Agent Install Dir e.g. C:\\zabbix\\agent",
+  :required => "optional",
+  :default => "C:\\zabbix\\agent",
+  :recipes => [ "zabbix_windows::windows_agent" ]
+
 attribute "zabbix_windows/server_path",
-  :display_name => "Zabbix Server",
+  :display_name => "ZabbixServerPath",
   :description => "Path to zabbix server e.g. https://mon1.cloudnoc.com",
   :required => "optional",
   :default => "http://mon1.cloudnoc.com",

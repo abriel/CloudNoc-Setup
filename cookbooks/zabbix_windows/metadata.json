@@ -1,128 +1,156 @@
 {
-  "maintainer_email": "stanislav.kraev@cloudnoc.com",
   "recipes": {
     "zabbix_windows::windows_agent": "Installs and configures Zabbix agent"
   },
   "providing": {
   },
-  "long_description": "Description\r\n===========\r\nInstall the Zabbix agent on Windows machines.\r\n\r\nRequirements\r\n============\r\nA Zabbix server is required for this to do anything useful.\r\n\r\nAttributes\r\n==========\r\n\r\nUsage\r\n=====\r\nSimply add the \"Zabbix\\_windows\" recipe to a windows machine after establishing your Zabbix server and setting the Attributes as appropriate to your environment.\r\n",
-  "description": "Installs/Configures zabbix",
-  "name": "zabbix_windows",
   "attributes": {
     "zabbix_windows/proxy_ip": {
-      "choice": [
-
-      ],
-      "default": "",
       "recipes": [
         "zabbix_windows::windows_agent"
+      ],
+      "calculated": false,
+      "choice": [
+
       ],
       "description": "PRIVATE_IP of zabbix proxy server",
+      "type": "string",
+      "required": "optional",
       "display_name": "proxy_ip",
-      "type": "string",
-      "calculated": false,
-      "required": "optional"
+      "default": ""
     },
-    "zabbix_windows/clientname": {
-      "choice": [
-
-      ],
-      "default": "",
+    "zabbix_windows/log_dir": {
       "recipes": [
         "zabbix_windows::windows_agent"
       ],
-      "description": "Name of the client",
-      "display_name": "clientname",
-      "type": "string",
       "calculated": false,
-      "required": "optional"
-    },
-    "zabbix_windows/password": {
       "choice": [
 
       ],
-      "default": "",
-      "recipes": [
-        "zabbix_windows::windows_agent"
-      ],
-      "description": "Password name used for authentification",
-      "display_name": "password",
+      "description": "Zabbix Agent Install Dir e.g. C:\\zabbix\\agent\\log",
       "type": "string",
-      "calculated": false,
-      "required": "optional"
-    },
-    "zabbix_windows/client_contact": {
-      "choice": [
-
-      ],
-      "default": "",
-      "recipes": [
-        "zabbix_windows::windows_agent"
-      ],
-      "description": "Contact email for tickets",
-      "display_name": "client_contact",
-      "type": "string",
-      "calculated": false,
-      "required": "optional"
-    },
-    "zabbix_windows/username": {
-      "choice": [
-
-      ],
-      "default": "",
-      "recipes": [
-        "zabbix_windows::windows_agent"
-      ],
-      "description": "User name used for authentification",
-      "display_name": "username",
-      "type": "string",
-      "calculated": false,
-      "required": "optional"
-    },
-    "zabbix_windows/proxy_host_name": {
-      "choice": [
-
-      ],
-      "default": "",
-      "recipes": [
-        "zabbix_windows::windows_agent"
-      ],
-      "description": "Hostname of Proxy Server",
-      "display_name": "proxy_host_name",
-      "type": "string",
-      "calculated": false,
-      "required": "optional"
+      "required": "optional",
+      "display_name": "agent_log_dir",
+      "default": "C:\\zabbix\\agent\\log"
     },
     "zabbix_windows/server_path": {
-      "choice": [
-
-      ],
-      "default": "http://mon1.cloudnoc.com",
       "recipes": [
         "zabbix_windows::windows_agent"
       ],
-      "description": "Path to zabbix server e.g. https://mon1.cloudnoc.com",
-      "display_name": "Zabbix Server",
-      "type": "string",
       "calculated": false,
-      "required": "optional"
+      "choice": [
+
+      ],
+      "description": "Path to zabbix server e.g. https://mon1.cloudnoc.com",
+      "type": "string",
+      "required": "optional",
+      "display_name": "ZabbixServerPath",
+      "default": "http://mon1.cloudnoc.com"
+    },
+    "zabbix_windows/install_dir": {
+      "recipes": [
+        "zabbix_windows::windows_agent"
+      ],
+      "calculated": false,
+      "choice": [
+
+      ],
+      "description": "Zabbix Agent Install Dir e.g. C:\\zabbix\\agent",
+      "type": "string",
+      "required": "optional",
+      "display_name": "agent_install_dir",
+      "default": "C:\\zabbix\\agent"
+    },
+    "zabbix_windows/clientname": {
+      "recipes": [
+        "zabbix_windows::windows_agent"
+      ],
+      "calculated": false,
+      "choice": [
+
+      ],
+      "description": "Name of the client",
+      "type": "string",
+      "required": "optional",
+      "display_name": "clientname",
+      "default": ""
+    },
+    "zabbix_windows/username": {
+      "recipes": [
+        "zabbix_windows::windows_agent"
+      ],
+      "calculated": false,
+      "choice": [
+
+      ],
+      "description": "User name used for authentification",
+      "type": "string",
+      "required": "optional",
+      "display_name": "username",
+      "default": ""
+    },
+    "zabbix_windows/proxy_host_name": {
+      "recipes": [
+        "zabbix_windows::windows_agent"
+      ],
+      "calculated": false,
+      "choice": [
+
+      ],
+      "description": "Hostname of Proxy Server",
+      "type": "string",
+      "required": "optional",
+      "display_name": "proxy_host_name",
+      "default": ""
+    },
+    "zabbix_windows/client_contact": {
+      "recipes": [
+        "zabbix_windows::windows_agent"
+      ],
+      "calculated": false,
+      "choice": [
+
+      ],
+      "description": "Contact email for tickets",
+      "type": "string",
+      "required": "optional",
+      "display_name": "client_contact",
+      "default": ""
+    },
+    "zabbix_windows/password": {
+      "recipes": [
+        "zabbix_windows::windows_agent"
+      ],
+      "calculated": false,
+      "choice": [
+
+      ],
+      "description": "Password name used for authentification",
+      "type": "string",
+      "required": "optional",
+      "display_name": "password",
+      "default": ""
     }
   },
   "recommendations": {
   },
+  "license": "All rights reserved",
+  "maintainer_email": "stanislav.kraev@cloudnoc.com",
+  "description": "Installs/Configures zabbix",
+  "platforms": {
+  },
+  "conflicting": {
+  },
+  "name": "zabbix_windows",
   "replacing": {
   },
-  "groupings": {
+  "long_description": "Description\r\n===========\r\nInstall the Zabbix agent on Windows machines.\r\n\r\nRequirements\r\n============\r\nA Zabbix server is required for this to do anything useful.\r\n\r\nAttributes\r\n==========\r\n\r\nUsage\r\n=====\r\nSimply add the \"Zabbix\\_windows\" recipe to a windows machine after establishing your Zabbix server and setting the Attributes as appropriate to your environment.\r\n",
+  "suggestions": {
   },
   "dependencies": {
   },
-  "platforms": {
-  },
-  "suggestions": {
-  },
-  "version": "0.0.1",
   "maintainer": "CloudNOC Inc",
-  "conflicting": {
-  },
-  "license": "All rights reserved"
+  "version": "0.0.1",
+  "groupings": {
+  }
 }
