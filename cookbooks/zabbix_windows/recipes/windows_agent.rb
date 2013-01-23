@@ -51,7 +51,7 @@ powershell "Chef Tutorial" do
 parameters({'MYNAME' => @node[:zabbix_windows][:install_dir]})
   powershell_script = <<'POWERSHELL_SCRIPT'
   echo "$env:MYPATH" > c:\1.txt
-  (Get-Content "$env:MYPATH\\zabbix_agentd.conf") | %{$_ -replace "http://", ""} | Set-Content "$env:MYPATH\\zabbix_agentd.conf"
+  (Get-Content $env:MYPATH\\zabbix_agentd.conf) | %{$_ -replace "http://", ""} | Set-Content $env:MYPATH\\zabbix_agentd.conf
 POWERSHELL_SCRIPT
   source(powershell_script)
 end
