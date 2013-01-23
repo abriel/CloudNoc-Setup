@@ -50,12 +50,14 @@ execute "unpack_conf" do
 end
 
 # * Populate node vars into zabbix_proxy.conf
+server=node[:zabbix][:server_path]
+server=server.gsub(/https?:../,"")
 bash "change_opts" do
   user "root"
   code <<-EOH
     dpkg -i /tmp/zabbix-proxy
     sed -i 's/server/proxy/g' /etc/init.d/zabbix_proxy
-    sed -i '/^Server.*/ c\Server=#{node[:zabbix][:server_path]}' /usr/local/etc/zabbix_proxy.conf
+    sed -i '/^Server.*/ c\Server=#{server}' /usr/local/etc/zabbix_proxy.conf
     sed -i '/^Hostname.*/ c\Hostname=#{node[:zabbix][:proxy_host_name]}' /usr/local/etc/zabbix_proxy.conf
     sed -i "s/https\:\/\///g" /usr/local/etc/zabbix_proxy.conf
     sed -i '/^DBName.*/ c\DBName=/usr/local/share/zabbix/zabbix.db' /usr/local/etc/zabbix_proxy.conf
