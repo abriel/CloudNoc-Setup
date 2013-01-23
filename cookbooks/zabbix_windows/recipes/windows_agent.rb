@@ -47,17 +47,17 @@ cookbook_file "#{installdir}\\#{sender}" do
 	action :create
 end
 
-#template "#{installdir}\\agent_include" do
-#	source "agent_include.erb"
-#	action :create_if_missing
-#	notifies :restart, "service[Zabbix Agent]"
-#end
+template "#{installdir}\\agent_include" do
+	source "agent_include.erb"
+	action :create
+	notifies :restart, "service[Zabbix Agent]"
+end
 
-#template "#{installdir}\\zabbix_agentd.conf" do
-#	source "zabbix_agentd.conf.erb"
-#	action :create_if_missing
-#	notifies :restart, "service[Zabbix Agent]"
-#end
+template "#{installdir}\\zabbix_agentd.conf" do
+	source "zabbix_agentd.conf.erb"
+	action :create
+	notifies :restart, "service[Zabbix Agent]"
+end
 
 
 # Check Windows Service
