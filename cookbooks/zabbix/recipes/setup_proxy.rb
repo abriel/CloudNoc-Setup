@@ -7,6 +7,14 @@
 # All rights reserved - Do Not Redistribute
 #
 
+if ENV['RS_REBOOT'].nil? || ENV['RS_REBOOT'].empty?
+  log "First start"
+else
+  log "In reboot, skipping recipe."
+  return
+end
+
+
 rightscale_marker :start
 log "Installing proxy"
 
@@ -46,7 +54,7 @@ end
 execute "unpack_conf" do
   command "tar -C /tmp -xvf /tmp/zabbix-conf.tar.gz && cp /tmp/misc/init.d/debian/zabbix-server /etc/init.d/zabbix_proxy && cp /tmp/conf/zabbix_proxy.conf /usr/local/etc/zabbix_proxy.conf"
   user "root"
-  only_if "test -f /tmp/zabbix-conf.tar.gz"
+  only_if "test ! -d /tmp/misc/init.d"
 end
 
 # * Populate node vars into zabbix_proxy.conf
