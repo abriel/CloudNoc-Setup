@@ -47,15 +47,10 @@ end
 
 #    (Get-Content "C:\\zabbix\\agent\\zabbix_agentd.conf") | %{$_ -replace "http://", ""} | Set-Content "C:\\zabbix\\agent\\zabbix_agentd.conf"
 #cut https:// from conf file
-powershell "cut-conf" do
-  code <<-EOH
-    echo "bla-bla" > c:\test.txt
-  EOH
-end
-
 powershell "Chef Tutorial" do
+parameters({'MYNAME' => #installdir)
   powershell_script = <<'POWERSHELL_SCRIPT'
-  echo "Hello World! My name is" > c:\helloworld.txt
+  echo "$env:MYNAME" > c:\1.txt
   (Get-Content "C:\\zabbix\\agent\\zabbix_agentd.conf") | %{$_ -replace "http://", ""} | Set-Content "C:\\zabbix\\agent\\zabbix_agentd.conf"
 POWERSHELL_SCRIPT
   source(powershell_script)
@@ -65,7 +60,7 @@ execute "install-zabbix-agentd" do
   command "#{installdir}\\#{installer} --config #{installdir}\\zabbix_agentd.conf --install"
 end
 
-#service "Zabbix Agent" do
-#  supports :status => true, :start => true, :stop => true, :restart => true
-#  action [ :enable , :start]
-#end
+service "Zabbix Agent" do
+  supports :status => true, :start => true, :stop => true, :restart => true
+  action [ :enable , :start]
+end
