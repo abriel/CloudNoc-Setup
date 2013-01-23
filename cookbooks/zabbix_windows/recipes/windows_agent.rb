@@ -51,10 +51,9 @@ end
 #	notifies :restart, "service[Zabbix Agent]"
 #end
 
-template "C:\\zabbix_agentd.conf" do
+template "#{installdir}\\zabbix_agentd.conf" do
 	source "zabbix_agentd.conf.erb"
 	action :create
-	notifies :restart, "service[Zabbix Agent]"
 end
 
 
