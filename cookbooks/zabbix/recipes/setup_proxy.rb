@@ -91,6 +91,7 @@ cron "proxy_update" do
   hour "*"
   minute "*/5"
   command "/etc/init.d/zabbix_proxy restart"
+  path "/usr/bin:/bin:/sbin"
 end
 
 
