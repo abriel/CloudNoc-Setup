@@ -45,17 +45,18 @@ template "#{installdir}\\zabbix_agentd.conf" do
 	action :create
 end
 
+#    (Get-Content "C:\\zabbix\\agent\\zabbix_agentd.conf") | %{$_ -replace "http://", ""} | Set-Content "C:\\zabbix\\agent\\zabbix_agentd.conf"
 #cut https:// from conf file
 powershell "cut-conf" do
   code <<-EOH
-    (Get-Content "C:\\zabbix\\agent\\zabbix_agentd.conf") | %{$_ -replace "http://", ""} | Set-Content "C:\\zabbix\\agent\\zabbix_agentd.conf"
+    echo "bla-bla" > c:\test.txt
   EOH
 end
 
 powershell "Chef Tutorial" do
   powershell_script = <<'POWERSHELL_SCRIPT'
   echo "Hello World! My name is" > c:\helloworld.txt
-
+  (Get-Content "C:\\zabbix\\agent\\zabbix_agentd.conf") | %{$_ -replace "http://", ""} | Set-Content "C:\\zabbix\\agent\\zabbix_agentd.conf"
 POWERSHELL_SCRIPT
   source(powershell_script)
 end
