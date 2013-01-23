@@ -30,23 +30,21 @@ log "include dir: #{node['zabbix_windows']['agent']['include_dir']}"
 
 directory node['zabbix_windows']['log_dir'] do
 	action :create
-	recursive true
-	inherits true
 end
 
 cookbook_file "#{installdir}\\#{installer}" do
 	source "#{installer}"
-	action :create_if_missing
+	action :create
 end
 
 cookbook_file "#{installdir}\\#{getter}" do
 	source "#{getter}"
-	action :create_if_missing
+	action :create
 end
 
 cookbook_file "#{installdir}\\#{sender}" do
 	source "#{sender}"
-	action :create_if_missing
+	action :create
 end
 
 #template "#{installdir}\\agent_include" do
