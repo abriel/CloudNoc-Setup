@@ -10,23 +10,19 @@
 installdir	= node.zabbix_windows.agent.install_dir
 includedir	= node.zabbix_windows.agent.include_dir
 
-installer	= "zabbix_agentd#{node['zabbix_windows']['agent']['windows_bitness']}.exe"
-getter		= "zabbix_get#{node['zabbix_windows']['agent']['windows_bitness']}.exe"
-sender		= "zabbix_sender#{node['zabbix_windows']['agent']['windows_bitness']}.exe"
+installer	= "zabbix_agentd#{node[:zabbix_windows][:windows_bitness]}.exe"
+getter		= "zabbix_get#{node[:zabbix_windows][:windows_bitness]}.exe"
+sender		= "zabbix_sender#{node[:zabbix_windows][:windows_bitness]}.exe"
 
 log "Debug"
 log "installer: #{installer}"
 log "getter: #{getter}"
 log "sender: #{sender}"
-log "log dir: #{node['zabbix_windows']['agent']['include_dir']}"
+log "log dir: #{node[:zabbix_windows][:include_dir]}"
 log "installdir: #{installdir}"
-log "include dir: #{node['zabbix_windows']['agent']['include_dir']}"
+log "include dir: #{node[:zabbix_windows][:include_dir]}"
 
-#directory node['zabbix_windows']['agent']['include_dir'] do
-#	action :create
-#end
-
-directory node['zabbix_windows']['log_dir'] do
+directory node[:zabbix_windows][:log_dir] do
 	action :create
 end
 
@@ -45,12 +41,6 @@ cookbook_file "#{installdir}\\#{sender}" do
 	action :create
 end
 
-#template "#{installdir}\\agent_include" do
-#	source "agent_include.erb"
-#	action :create
-#	notifies :restart, "service[Zabbix Agent]"
-#end
-
 template "#{installdir}\\zabbix_agentd.conf" do
 	source "zabbix_agentd.conf.erb"
 	action :create
@@ -58,17 +48,17 @@ end
 
 
 # Check Windows Service
-#require 'win32ole'
-#zabbixservice = 'Zabbix Agent'
+#require win32ole
+#zabbixservice = Zabbix Agent
 #wmi = WIN32OLE.connect("winmgmts://")
-#services = wmi.ExecQuery("Select * from Win32_Service where Name = '#{zabbixservice}'")
+#services = wmi.ExecQuery("Select * from Win32_Service where Name = #{zabbixservice}")
 #if services.count >= 1
 #	#service exists
 #else
 #	#INSTALL AWAY!
 #	execute "Install Zabbix" do
 #		command "#{installdir}\\#{installer} --config #{installdir}\\zabbix_agentd.conf --install"
-#		#not_if { File.exists?("#{node['perl']['install_dir']}\\perl\\bin\\perl.exe") }
+#		#not_if { File.exists?("#{node[perl][install_dir]}\\perl\\bin\\perl.exe") }
 #	end
 #end
 
