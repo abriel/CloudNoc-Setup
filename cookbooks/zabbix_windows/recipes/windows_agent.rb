@@ -22,9 +22,9 @@ log "log dir: #{node['zabbix_windows']['agent']['include_dir']}"
 log "installdir: #{installdir}"
 log "include dir: #{node['zabbix_windows']['agent']['include_dir']}"
 
-directory node['zabbix_windows']['agent']['include_dir'] do
-	action :create
-end
+#directory node['zabbix_windows']['agent']['include_dir'] do
+#	action :create
+#end
 
 directory node['zabbix_windows']['log_dir'] do
 	action :create
