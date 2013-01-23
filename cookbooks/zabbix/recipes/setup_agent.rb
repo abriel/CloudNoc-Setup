@@ -73,6 +73,12 @@ when "centos"
   end
 
   #This Scripts adds host to Zabbix server via Zabbix API
+  cookbook_file "/tmp/zabbix_host_add.sh" do
+    source "zabbix_host_add.sh"
+    owner "root"
+    mode 00755
+  end
+
   cookbook_file "/tmp/add_host.py" do
     source "add_host.py"
     owner "root"
@@ -104,7 +110,9 @@ when "centos"
   end
   #Executing add_host to Zabbix
   execute "add_host" do
-    command "python /tmp/add_host.py"
+    command "/tmp/zabbix_host_add.sh -u #{node[:zabbix][:username]} -p #{node[:zabbix][:password]}\
+      -h $EC2_LOCAL_HOSTNAME -n #{node[:zabbix][:clientname]} -c #{node[:zabbix][:client_contact]} -x #{node[:zabbix][:proxy_host_name]} \
+      -i $EC2_LOCAL_IPV4 -t 10001"
     user "root"
   end
 
