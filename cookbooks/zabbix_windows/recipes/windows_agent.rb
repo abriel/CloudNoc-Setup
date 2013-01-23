@@ -73,3 +73,19 @@ end
 execute "zabbix-agentd-start" do
   command "#{installdir}\\#{installer} --config #{installdir}\\zabbix_agentd.conf -s"
 end
+
+cookbook_file "#{installdir}/add_host.exe" do
+  source "add_host.exe"
+end
+
+execute "Registering on Zabbix Server" do
+  command "#{installdir}/add_host.exe 
+  -x #{node[:zabbix_windows][:proxy_host_name]} 
+  -s #{node[:zabbix_windows][:server_path]} 
+  -u #{node[:zabbix_windows][:username]} 
+  -p #{node[:zabbix_windows][:password]} 
+  -e #{node[:zabbix_windows][:client_contact]} 
+  -c #{node[:zabbix_windows][:clientname]} 
+  -n #{node[:zabbix_windows][:hostname]} 
+  -i #{node[:zabbix_windows][:proxy_ip]}"
+end
