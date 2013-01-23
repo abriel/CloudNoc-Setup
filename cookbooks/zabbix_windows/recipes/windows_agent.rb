@@ -52,7 +52,6 @@ parameters({'ZABPATH' => #{installdir})
     echo "$env:ZABPATH\\zabbix_agentd.conf" > c:\test.txt
     (Get-Content $env:ZABPATH\\zabbix_agentd.conf | %{$_ -replace "http://", ""} | Set-Content $env:ZABPATH\\zabbix_agentd.conf
 POWERSHELL_SCRIPT
-  source(powershell_script)
 end
 
 execute "install-zabbix-agentd" do
