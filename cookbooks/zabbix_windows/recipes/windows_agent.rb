@@ -48,13 +48,14 @@ end
 #cut https:// from conf file
 powershell "cut-conf" do
   code <<-EOH
-    (Get-Content "C:\\zabbix\\agent\\zabbix_agentd.conf" | %{$_ -replace "http://", ""} | Set-Content "C:\\zabbix\\agent\\zabbix_agentd.conf"
+    (Get-Content "C:\\zabbix\\agent\\zabbix_agentd.conf") | %{$_ -replace "http://", ""} | Set-Content "C:\\zabbix\\agent\\zabbix_agentd.conf"
   EOH
 end
 
 powershell "Chef Tutorial" do
   powershell_script = <<'POWERSHELL_SCRIPT'
   echo "Hello World! My name is" > c:\helloworld.txt
+
 POWERSHELL_SCRIPT
   source(powershell_script)
 end
