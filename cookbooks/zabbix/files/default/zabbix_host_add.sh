@@ -1,12 +1,12 @@
 #!/bin/bash
 
-if ( ! getopts "u:p:x:n:c:t:h:i:" opt); then
+if ( ! getopts "u:p:s:x:n:c:t:h:i:" opt); then
         echo "Usage: `basename $0` options -u username -p password -x proxy_host_name -n clientname -c contact -t template -h hostname -i ipaddress -s server";
         exit $E_OPTERROR;
 
 fi
 
-while getopts "u:p:x:n:c:t:h:i:" opt; do
+while getopts "u:p:s:x:n:c:t:h:i:" opt; do
         case $opt in
                 u) USER=$OPTARG;;
                 p) PASS=$OPTARG;;
