@@ -61,7 +61,7 @@ when "centos"
   bash "update_config" do
     code <<-EOH
       rpm -i /tmp/#{node[:zabbix][:agent_package]}
-      sed -i '/^Server.*/ c\Server=#{node[:zabbix][:server_path]}' /usr/local/etc/zabbix_agentd.conf
+      sed -i '/^Server.*/ c\Server=#{node[:zabbix][:proxy_ip]}' /usr/local/etc/zabbix_agentd.conf
       sed -i '/^Hostname.*/ c\Hostname=#{hostname}' /usr/local/etc/zabbix_agentd.conf
       sed -i '/^ActiveServer.*/ c\ActiveServer=#{node[:zabbix][:proxy_ip]}' /usr/local/etc/zabbix_agentd.conf
     EOH
