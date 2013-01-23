@@ -4,7 +4,4 @@ DebugLevel=2
 EnableRemoteCommands=1
 LogRemoteCommands=1
 Server=<%= node.zabbix_windows.agent.servers.join(',') %>
-<% if node.zabbix_windows.agent.servers_active.first -%>
-ServerActive=<%= node.zabbix_windows.agent.servers_active.join(',') %>
-<% end -%>
 StartAgents=4
