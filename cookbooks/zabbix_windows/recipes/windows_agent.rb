@@ -22,6 +22,7 @@ log "installdir: #{installdir}"
 
 directory node[:zabbix_windows][:log_dir] do
 	action :create
+  recursive true
 end
 
 cookbook_file "#{installdir}\\#{installer}" do
@@ -44,21 +45,9 @@ template "#{installdir}\\zabbix_agentd.conf" do
 	action :create
 end
 
-
-# Check Windows Service
-#require win32ole
-#zabbixservice = Zabbix Agent
-#wmi = WIN32OLE.connect("winmgmts://")
-#services = wmi.ExecQuery("Select * from Win32_Service where Name = #{zabbixservice}")
-#if services.count >= 1
-#	#service exists
-#else
-#	#INSTALL AWAY!
-#	execute "Install Zabbix" do
-#		command "#{installdir}\\#{installer} --config #{installdir}\\zabbix_agentd.conf --install"
-#		#not_if { File.exists?("#{node[perl][install_dir]}\\perl\\bin\\perl.exe") }
-#	end
-#end
+execute "install-zabbix-agentd" do
+  command "#{installdir}\\#{installer} --config #{installdir}\\zabbix_agentd.conf --install"
+end
 
 #service "Zabbix Agent" do
 #  supports :status => true, :start => true, :stop => true, :restart => true
