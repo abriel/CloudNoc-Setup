@@ -47,7 +47,7 @@ end
 
 #cut https:// from conf file
 powershell "cut-conf" do
-parameters({'ZABPATH' => '#{installdir}')
+  environment({'ZABPATH' => '#{installdir}')
   code <<-EOH
     echo "$env:ZABPATH\\zabbix_agentd.conf" > c:\test.txt
     (Get-Content $env:ZABPATH\\zabbix_agentd.conf | %{$_ -replace "http://", ""} | Set-Content $env:ZABPATH\\zabbix_agentd.conf
