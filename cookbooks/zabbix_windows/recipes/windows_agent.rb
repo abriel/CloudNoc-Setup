@@ -45,6 +45,14 @@ template "#{installdir}\\zabbix_agentd.conf" do
 	action :create
 end
 
+#cut https:// from conf file
+powershell "cut-conf" do
+  code <<-EOH
+    (Get-Content "#{installdir}\\zabbix_agentd.conf" | %{$_ -replace "http://", ""} | Set-Content "#{installdir}\\zabbix_agentd.conf"
+    (Get-Content "#{installdir}\\zabbix_agentd.conf" | %{$_ -replace "https://", ""} | Set-Content "#{installdir}\\zabbix_agentd.conf"
+  EOH
+end
+
 execute "install-zabbix-agentd" do
   command "#{installdir}\\#{installer} --config #{installdir}\\zabbix_agentd.conf --install"
 end
