@@ -51,7 +51,7 @@ when "centos"
   end
 
   execute "unpack_conf" do
-    command "tar -C /tmp -xvf /tmp/zabbix-conf.tar.gz && cp /tmp/conf/zabbix_agentd.conf /usr/local/etc/zabbix_agentd.conf && cp /tmp/misc/init.d/fedora/core5/zabbix_agentd /etc/init.d/zabbix_agentd"
+    command "tar -C /tmp -xvf /tmp/zabbix-conf.tar.gz && cp /tmp/conf/zabbix_agentd.conf /usr/local/etc/zabbix_agentd.conf && cp /tmp/misc/init.d/fedora/core5/zabbix_agentd /etc/init.d/zabbix_agent"
     user "root"
     only_if "test -f /tmp/#{node[:zabbix][:agent_package]}"
   end
