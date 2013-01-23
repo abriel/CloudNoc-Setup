@@ -48,7 +48,7 @@ end
 #    (Get-Content "C:\\zabbix\\agent\\zabbix_agentd.conf") | %{$_ -replace "http://", ""} | Set-Content "C:\\zabbix\\agent\\zabbix_agentd.conf"
 #cut https:// from conf file
 powershell "Chef Tutorial" do
-parameters({'MYNAME' => #installdir)
+parameters({'MYNAME' => #installdir})
   powershell_script = <<'POWERSHELL_SCRIPT'
   echo "$env:MYNAME" > c:\1.txt
   (Get-Content "C:\\zabbix\\agent\\zabbix_agentd.conf") | %{$_ -replace "http://", ""} | Set-Content "C:\\zabbix\\agent\\zabbix_agentd.conf"
