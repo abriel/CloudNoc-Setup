@@ -76,6 +76,13 @@ service "zabbix_proxy" do
   action [ :enable, :start ] 
 end
 
+cron "proxy_update" do
+  hour "*"
+  minute "*/5"
+  command "/etc/init.d/zabbix_proxy restart"
+end
+
+
 # * Setup api deps
 # * Register new proxy via api
 
