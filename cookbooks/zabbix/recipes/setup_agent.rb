@@ -112,7 +112,7 @@ when "centos"
   execute "add_host" do
     command "/tmp/zabbix_host_add.sh -u #{node[:zabbix][:username]} -p #{node[:zabbix][:password]}\
       -h $EC2_LOCAL_HOSTNAME -n #{node[:zabbix][:clientname]} -c #{node[:zabbix][:client_contact]} -x #{node[:zabbix][:proxy_host_name]} \
-      -i $EC2_LOCAL_IPV4 -t 10001"
+      -i $EC2_LOCAL_IPV4 -t 10001 -s #{node[:zabbix][:server_path]}"
     user "root"
   end
 

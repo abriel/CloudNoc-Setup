@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ( ! getopts "u:p:x:n:c:t:h:i:" opt); then
-        echo "Usage: `basename $0` options -u username -p password -x proxy_host_name -n clientname -c contact -t template -h hostname -i ipaddress";
+        echo "Usage: `basename $0` options -u username -p password -x proxy_host_name -n clientname -c contact -t template -h hostname -i ipaddress -s server";
         exit $E_OPTERROR;
 
 fi
@@ -10,6 +10,7 @@ while getopts "u:p:x:n:c:t:h:i:" opt; do
         case $opt in
                 u) USER=$OPTARG;;
                 p) PASS=$OPTARG;;
+                s) SERV=$OPTARG;;
                 x) PROXY_HOST_NAME=$OPTARG;;
                 n) CLIENTNAME=$OPTARG;;
                 c) CLIENTCONTACT=$OPTARG;;
@@ -31,7 +32,7 @@ CURL () {
         EPARAMS=`echo $PARAMS | sed 's/\+/\"/g'`
         curl -k -i -X POST -H 'Content-Type: application/json-rpc' \
           -d "{\"params\": { $EPARAMS }, \"jsonrpc\": \"2.0\", \"method\": \"$METHOD\",\"auth\": \"$AUTHTOKEN\", \"id\": 0}" \
-          --user "$USER:$PASS" https://mon1.cloudnoc.com/api_jsonrpc.php
+          --user "$USER:$PASS" $SERV/api_jsonrpc.php
 }
 
 
