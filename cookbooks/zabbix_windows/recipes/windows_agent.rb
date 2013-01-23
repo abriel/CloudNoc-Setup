@@ -70,10 +70,6 @@ else
   end
 end
 
-#execute "install-zabbix-agentd" do
-#  command "#{installdir}\\#{installer} --config #{installdir}\\zabbix_agentd.conf --install"
-#end
-
-service "Zabbix Agent" do
-  action :start
+execute "zabbix-agentd-start" do
+  command "#{installdir}\\#{installer} --config #{installdir}\\zabbix_agentd.conf -s"
 end
